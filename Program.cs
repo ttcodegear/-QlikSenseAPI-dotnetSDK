@@ -1,7 +1,7 @@
 ﻿using Qlik.Engine;
 
 try {
-  var uri = new Uri("https://xxx.yy.qlikcloud.com");
+  var uri = new Uri("https://xxxx.yy.qlikcloud.com");
   var location = QcsLocation.FromUri(uri);
   location.AsApiKey("eyJhbGci....");
   var app = location.App("72a3da4b-1093-4c4c-840d-1ee44fbcbb91", SessionToken.Unique(), false);
@@ -31,6 +31,7 @@ try {
   if(lo_col_len != 0)
     lo_page_height = (int)Math.Floor(10000/(double)lo_col_len);
   int lo_row_top = 0;
+  System.Console.Out.WriteLine(listobject_def.Def.FieldLabels.First<string>());
   while(true) {
     IEnumerable<NxCellRows> rows = lo_pager.GetAllData(
       new NxPage{Top = lo_row_top, Left = 0, Height = lo_page_height, Width = lo_col_len}
@@ -99,6 +100,10 @@ try {
   if(hc_col_len != 0)
     hc_page_height = (int)Math.Floor(10000/(double)hc_col_len);
   int hc_row_top = 0;
+  foreach(var dim in hypercube_def.Dimensions)
+    System.Console.Out.WriteLine(dim.Def.FieldLabels.First<string>());
+  foreach(var mes in hypercube_def.Measures)
+    System.Console.Out.WriteLine(mes.Def.Label);
   while(true) {
     IEnumerable<NxCellRows> rows = hc_pager.GetAllData(
       new NxPage{Top = hc_row_top, Left = 0, Height = hc_page_height, Width = hc_col_len}
