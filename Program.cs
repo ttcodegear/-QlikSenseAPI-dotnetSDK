@@ -31,7 +31,8 @@ try {
   if(lo_col_len != 0)
     lo_page_height = (int)Math.Floor(10000/(double)lo_col_len);
   int lo_row_top = 0;
-  System.Console.Out.WriteLine(listobject_def.Def.FieldLabels.First<string>());
+  ListObject lo_layout = lo_hypercube.Layout.Get<ListObject>("qListObject");
+  System.Console.Out.WriteLine(lo_layout.DimensionInfo.FallbackTitle);
   while(true) {
     IEnumerable<NxCellRows> rows = lo_pager.GetAllData(
       new NxPage{Top = lo_row_top, Left = 0, Height = lo_page_height, Width = lo_col_len}
@@ -100,10 +101,11 @@ try {
   if(hc_col_len != 0)
     hc_page_height = (int)Math.Floor(10000/(double)hc_col_len);
   int hc_row_top = 0;
-  foreach(var dim in hypercube_def.Dimensions)
-    System.Console.Out.WriteLine(dim.Def.FieldLabels.First<string>());
-  foreach(var mes in hypercube_def.Measures)
-    System.Console.Out.WriteLine(mes.Def.Label);
+  HyperCube hc_layaout = hc_hypercube.Layout.Get<HyperCube>("qHyperCube");
+  foreach(var dim in hc_layaout.DimensionInfo)
+    System.Console.Out.WriteLine(dim.FallbackTitle);
+  foreach(var mes in hc_layaout.MeasureInfo)
+    System.Console.Out.WriteLine(mes.FallbackTitle);
   while(true) {
     IEnumerable<NxCellRows> rows = hc_pager.GetAllData(
       new NxPage{Top = hc_row_top, Left = 0, Height = hc_page_height, Width = hc_col_len}
