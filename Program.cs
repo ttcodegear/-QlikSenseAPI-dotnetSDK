@@ -1,10 +1,11 @@
 ﻿using Qlik.Engine;
 
+IApp app = null;
 try {
   var uri = new Uri("https://xxxx.yy.qlikcloud.com");
   var location = QcsLocation.FromUri(uri);
   location.AsApiKey("eyJhbGci....");
-  var app = location.App("72a3da4b-1093-4c4c-840d-1ee44fbcbb91", SessionToken.Unique(), false);
+  app = location.App("72a3da4b-1093-4c4c-840d-1ee44fbcbb91", SessionToken.Unique(), false);
 
   app.ClearAll();
   var field = app.GetField("支店名");
@@ -132,4 +133,8 @@ try {
 }
 catch (System.Exception e) {
   System.Console.Write(e);
+}
+finally {
+  if((app != null))
+    app.Dispose();
 }
